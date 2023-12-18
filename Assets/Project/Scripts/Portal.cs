@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [SerializeField] private Portal connectedPortal;
+    [SerializeField] private Portal[] connectedPortals;
     
     [SerializeField] public float portOffset =1;
 
@@ -10,17 +10,26 @@ public class Portal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-           Transform ballTransform = other.gameObject.transform;
-
-           other.gameObject.transform.position = connectedPortal.gameObject.transform.position + RotateAroundZ(Vector3.up, connectedPortal.transform.rotation.eulerAngles.z)
-               * connectedPortal.portOffset;
-           other.gameObject.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, ballTransform.rotation.z, transform.rotation.w);
-           Rigidbody2D rigidbody2D = other.gameObject.GetComponent<Rigidbody2D>();
-
-           rigidbody2D.velocity = RotateAroundZ(rigidbody2D.velocity, connectedPortal.transform.rotation.eulerAngles.z + transform.rotation.eulerAngles.z) * rigidbody2D.velocity.magnitude*-1;
+            TeleportBall(other.gameObject);
         }
     }
-    
+
+    protected virtual void TeleportBall(GameObject ball)
+    {
+        Portal connectedPortal;
+        if(connectedPortals.Length < 1) return;
+        connectedPortal = connectedPortals.Length == 1 ? connectedPortals[0] : connectedPortals[Random.Range(0, connectedPortals.Length - 1)];
+           
+        ball.transform.position = connectedPortal.gameObject.transform.position +
+                                  RotateAroundZ(Vector3.up, connectedPortal.transform.rotation.eulerAngles.z) *
+                                  connectedPortal.portOffset;
+
+        Rigidbody2D ballRb2D = ball.GetComponent<Rigidbody2D>();
+
+        ballRb2D.velocity = RotateAroundZ(ballRb2D.velocity, connectedPortal.transform.rotation.eulerAngles.z + transform.rotation.eulerAngles.z) *
+                            ballRb2D.velocity.magnitude * -1;
+    }
+
     Vector3 RotateAroundZ(Vector3 start, float angle)
     {
         start.Normalize();
