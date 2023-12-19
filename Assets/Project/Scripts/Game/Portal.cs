@@ -8,7 +8,7 @@ namespace Project.Scripts.Game
     {
         [SerializeField] private Portal[] connectedPortals;
     
-        public float portOffset;
+        [HideInInspector] public float portOffset;
 
         private void OnEnable()
         {

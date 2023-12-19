@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(AudioSource))]
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _failsUI;
     
     public AudioClip finishSound,failSound;
-    public int fails =0;
+    public int lives =3;
     
     private Ball _ball;
     private Board _player;
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _failsUI.text = "Fails : " + fails;
+        _failsUI.text = "Lives : " + lives;
         _ball.BallReset();
     }
     
@@ -48,10 +49,10 @@ public class GameManager : MonoBehaviour
 
     public void Fail()
     {
-        fails++;
-        _failsUI.text = "Fails : " + fails;
+        lives--;
+        _failsUI.text = "Lives : " + lives;
         if(failSound) _audioSource.PlayOneShot(failSound);
         _ball.BallReset();
+        if (lives < 1) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
 }
