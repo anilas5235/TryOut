@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,13 +8,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
+    [SerializeField] private TextMeshProUGUI _failsUI;
+    
     public AudioClip finishSound,failSound;
     public int fails =0;
     
     private Ball _ball;
     private Board _player;
-    private TextMeshProUGUI _failsUI;
     private AudioSource _audioSource;
+
+    public Action OnLevelFinished;
     
     private void Awake()
     {
@@ -27,22 +31,27 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _failsUI.text = "Fails : " + fails;
+        _ball.BallReset();
     }
+    
+    public void InvokeCheckLevelFinished(){ Invoke(nameof(CheckLevelFinished),.5f);}
     
     public void CheckLevelFinished()
     {
         if (FindObjectOfType<Brick>() != null) return;
         
         print("level finished ");
-        _audioSource.PlayOneShot(finishSound);
+        if(finishSound) _audioSource.PlayOneShot(finishSound);
         _ball.BallReset();
+        OnLevelFinished?.Invoke();
     }
 
     public void Fail()
     {
         fails++;
         _failsUI.text = "Fails : " + fails;
-        _audioSource.PlayOneShot(failSound);
+        if(failSound) _audioSource.PlayOneShot(failSound);
+        _ball.BallReset();
     }
     
 }

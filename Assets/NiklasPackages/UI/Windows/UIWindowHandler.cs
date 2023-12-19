@@ -58,6 +58,7 @@ namespace UI.Windows
         {
             _myUIWindowMaster.UpdateState();
             gameObject.SetActive(false);
+            _myUIWindowMaster.CurrentlyActiveWindows.Remove(this);
         }
 
         public void QuitApplication() => Application.Quit();
@@ -67,6 +68,8 @@ namespace UI.Windows
         {
             gameObject.SetActive(true);
             _myUIWindowMaster ??= UIWindowMaster.Instance;
+            _myUIWindowMaster.PushWindowHandler(this);
+            _myUIWindowMaster.UpdateState();
         }
     }
 }

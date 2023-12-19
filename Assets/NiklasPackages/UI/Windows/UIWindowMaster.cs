@@ -4,26 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using Project.Scripts.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.Windows
 {
     public class UIWindowMaster : Singleton<UIWindowMaster>
     {
         [SerializeField] private UIWindowHandler standardWindowToOpen;
-        [SerializeField] private bool deactivateCursorOnMenuClose;
+        [SerializeField] private bool handelCursor;
         [SerializeField] private bool menuActive;
         [SerializeField] private bool enableSystem = true;
+        [SerializeField] private bool stopTimeIfUIActive = true;
         
         public Action<bool> OnActiveUIChanged;
-        public readonly Stack<UIWindowHandler> CurrentlyActiveWindows = new Stack<UIWindowHandler>();
+        public readonly List<UIWindowHandler> CurrentlyActiveWindows = new ();
 
         private void Start()
         {
             AudioOptionsUIWindow audioOptions = FindObjectOfType<AudioOptionsUIWindow>(true);
-            if (audioOptions)
-            {
-                audioOptions.LoadFromSaveText();
-            }
+            if (audioOptions) audioOptions.LoadFromSaveText();
+            if(handelCursor) CursorManager.Instance.DeActivateCursor();
         }
 
         public bool MenuActive
@@ -45,8 +45,21 @@ namespace UI.Windows
             if (Input.GetButtonDown("Cancel"))
             {
                 if (!MenuActive) OpenWindow(); 
-                else CurrentlyActiveWindows.Pop().UIEsc();
+                else PopWindowHandler().UIEsc();
             }
+        }
+
+        public void PushWindowHandler(UIWindowHandler handler)
+        {
+            if (CurrentlyActiveWindows.Contains(handler)) CurrentlyActiveWindows.Remove(handler);
+            CurrentlyActiveWindows.Insert(0,handler);
+        }
+
+        public UIWindowHandler PopWindowHandler()
+        {
+            UIWindowHandler handler = CurrentlyActiveWindows[0];
+            CurrentlyActiveWindows.RemoveAt(0);
+            return handler;
         }
 
         public void OpenWindow(UIWindowHandler windowToOpen = null)
@@ -54,10 +67,8 @@ namespace UI.Windows
             if(!enableSystem) return;
             if (windowToOpen == null) windowToOpen = standardWindowToOpen;
             windowToOpen.ActivateWindow();
-            CurrentlyActiveWindows.Push(windowToOpen);
           
             MenuActive = true;
-            if(deactivateCursorOnMenuClose)CursorManager.Instance.ActivateCursor();
         }
 
         public void UpdateState()
@@ -68,10 +79,18 @@ namespace UI.Windows
         private IEnumerator UpdateMenuState()
         {
             yield return new WaitForEndOfFrame();
-            if (CurrentlyActiveWindows.Any()) yield break;
             
-            MenuActive = false;
-            if(deactivateCursorOnMenuClose) CursorManager.Instance.DeActivateCursor();
+            MenuActive = CurrentlyActiveWindows.Any();
+            
+            if (handelCursor)
+            {
+                if (menuActive)CursorManager.Instance.ActivateCursor();
+                else CursorManager.Instance.DeActivateCursor();
+            }
+            if (stopTimeIfUIActive)
+            {
+                Time.timeScale = menuActive ? 0 : 1;
+            }
         }
     }
 }

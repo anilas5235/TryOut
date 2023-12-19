@@ -610,7 +610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1306560573542991062}
-  - component: {fileID: 828021080}
+  - component: {fileID: 5798747876983364680}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -641,7 +641,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &828021080
+--- !u!114 &5798747876983364680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

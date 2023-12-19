@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &3818542304321580053
 MonoBehaviour:
@@ -143,5 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bfaa84a1fe630240a38100c574001b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedPortal: {fileID: 0}
+  connectedPortals: []
   portOffset: 0.5

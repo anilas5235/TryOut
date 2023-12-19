@@ -14,6 +14,8 @@ public class Brick : MonoBehaviour
         hp--;
         if(hp>0)return;
         
+        GameManager.Instance.InvokeCheckLevelFinished();
+        
         Destroy(gameObject);
     }
 }
