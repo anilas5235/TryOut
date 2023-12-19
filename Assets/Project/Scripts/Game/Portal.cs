@@ -7,12 +7,17 @@ namespace Project.Scripts.Game
     public class Portal : MonoBehaviour
     {
         [SerializeField] private Portal[] connectedPortals;
-    
-        [HideInInspector] public float portOffset;
+        
+        public float portOffset { private set; get; }
+        public Vector3 normalDirection { private set; get; }
+        
+        public BoxCollider2D BoxCollider2D { private set; get; }
 
         private void OnEnable()
         {
-            portOffset = transform.localScale.y + 0.2f;
+            normalDirection = VectorUtilities.RotateAroundZ(Vector3.up, transform.rotation.eulerAngles.z);
+            BoxCollider2D = GetComponent<BoxCollider2D>();
+            portOffset = BoxCollider2D.size.y+ 0.1f;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -28,18 +33,21 @@ namespace Project.Scripts.Game
             if (connectedPortals.Length < 1) return;
             Portal connectedPortal = connectedPortals.Length == 1
                 ? connectedPortals[0]
-                : connectedPortals[Random.Range(0, connectedPortals.Length - 1)];
-
-            Vector3 connectedPortalRotation = connectedPortal.transform.rotation.eulerAngles;
-            Vector3 myRotation = transform.rotation.eulerAngles;
+                : connectedPortals[Mathf.RoundToInt(Random.Range(0f, connectedPortals.Length - 1f))];
 
             ball.transform.position = connectedPortal.gameObject.transform.position +
-                                      VectorUtilities.RotateAroundZ(Vector3.up, connectedPortalRotation.z) *
-                                      connectedPortal.portOffset;
+                                      connectedPortal.normalDirection * connectedPortal.portOffset;
 
             Rigidbody2D ballRb2D = ball.GetComponent<Rigidbody2D>();
+            Vector2 velocity = ballRb2D.velocity;
 
-            ballRb2D.velocity =  VectorUtilities.RotateAroundZ(ballRb2D.velocity,myRotation.z - connectedPortalRotation.z);
+            float entranceAngle = Vector3.Angle(velocity, normalDirection);
+            float exitAngle = (entranceAngle % 90 ) *-1;
+           
+            Vector2 newVelocity =
+                VectorUtilities.RotateAroundZ(connectedPortal.normalDirection, exitAngle) * velocity.magnitude;
+
+            ballRb2D.velocity = newVelocity;
         }
     }
 }
