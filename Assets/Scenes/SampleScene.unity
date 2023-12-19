@@ -1540,7 +1540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bda4653e998abd4b98e4d43513d05cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deactivateOnStart: 1
 --- !u!114 &709439412 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3818542304321580053, guid: bd9f836df9f1c0f4cad570ad0ca431f9, type: 3}
@@ -2005,9 +2004,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standardWindowToOpen: {fileID: 862243552}
-  deactivateCursorOnMenuClose: 0
+  handelCursor: 1
   menuActive: 0
   enableSystem: 1
+  stopTimeIfUIActive: 1
 --- !u!1001 &1214496133
 PrefabInstance:
   m_ObjectHideFlags: 0

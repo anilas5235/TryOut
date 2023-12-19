@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Project.Scripts.General;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI.Windows
 {
