@@ -39,8 +39,7 @@ namespace Project.Scripts.Game
 
             Rigidbody2D ballRb2D = ball.GetComponent<Rigidbody2D>();
 
-            ballRb2D.velocity =  VectorUtilities.RotateAroundZ(Vector3.Reflect(ballRb2D.velocity, Vector3.forward),
-                myRotation.z - connectedPortalRotation.z) * -1;
+            ballRb2D.velocity =  VectorUtilities.RotateAroundZ(ballRb2D.velocity,myRotation.z - connectedPortalRotation.z);
         }
     }
 }
