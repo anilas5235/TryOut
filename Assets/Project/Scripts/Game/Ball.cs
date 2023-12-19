@@ -17,6 +17,7 @@ public class Ball : MonoBehaviour
     private void OnEnable()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
+        if(releaseBallOnStart) ReleaseBall();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -24,7 +25,7 @@ public class Ball : MonoBehaviour
         myRigidbody2D.velocity *= 1 + forceIncrease/100f;
         if (other.gameObject.CompareTag("Brick"))
         {
-            GetComponentInChildren<Light2D>().pointLightOuterRadius += 0.05f;
+            GetComponentInChildren<Light2D>().pointLightOuterRadius += 0.2f;
         }
         
     }
@@ -32,7 +33,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(releaseBallOnStart) ReleaseBall();
+        
     }
 
     private void Update()

@@ -25,6 +25,11 @@ namespace UI.Windows
             if(handelCursor) CursorManager.Instance.DeActivateCursor();
         }
 
+        private void OnEnable()
+        {
+            Time.timeScale = 1;
+        }
+
         public bool MenuActive
         {
             get => menuActive;

@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class M_HoverLight : MonoBehaviour
 {
+
     private void OnMouseOver()
     {
         GetComponentInChildren<Light2D>().intensity = 0.7f;
