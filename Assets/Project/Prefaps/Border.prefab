@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2062430826122037212}
   - component: {fileID: 2635485676422682555}
   - component: {fileID: 322273539839568487}
+  - component: {fileID: 4668443979320796127}
   m_Layer: 0
   m_Name: Border
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4.57, z: 0}
-  m_LocalScale: {x: 5, y: 0.1, z: 1}
+  m_LocalScale: {x: 6, y: 0.099999994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -130,3 +131,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4668443979320796127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4758996587993100419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.49929357, y: -0.69909906, z: 0}
+  - {x: -0.5030795, y: 0.7291668, z: 0}
+  - {x: 0.5037687, y: 0.7103697, z: 0}
+  - {x: 0.5017223, y: -1.0787139, z: 0}
+  m_ShapePathHash: 731105795
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 64236
+  m_LocalBounds:
+    m_Center: {x: 0.00034457445, y: -0.17477357, z: 0}
+    m_Extent: {x: 0.50342405, y: 0.9039403, z: 0}

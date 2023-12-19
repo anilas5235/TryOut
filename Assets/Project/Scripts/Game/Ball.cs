@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Ball : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         myRigidbody2D.velocity *= 1 + forceIncrease/100f;
+        if (other.gameObject.CompareTag("Brick"))
+        {
+            GetComponentInChildren<Light2D>().pointLightOuterRadius += 0.05f;
+        }
+        
     }
 
     // Start is called before the first frame update
