@@ -38,7 +38,6 @@ public class Ball : MonoBehaviour
     private void Update()
     {
         if(!kickStart) return;
-
         if (Input.GetButtonDown("Jump")) ReleaseBall();
     }
 
@@ -47,6 +46,7 @@ public class Ball : MonoBehaviour
          transform.SetParent(null);
          myRigidbody2D.isKinematic = false;
          myRigidbody2D.AddForce(initialDirection*startForce);
+         kickStart = false;
     }
 
     public void BallReset()
