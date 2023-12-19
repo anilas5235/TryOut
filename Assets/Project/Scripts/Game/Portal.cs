@@ -12,7 +12,7 @@ namespace Project.Scripts.Game
 
         private void OnEnable()
         {
-            portOffset = transform.localScale.y + 0.1f;
+            portOffset = transform.localScale.y + 0.2f;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
